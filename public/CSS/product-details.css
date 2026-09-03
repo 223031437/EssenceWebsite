@@ -384,3 +384,40 @@ body {
 .delete-review:hover{
     transform: translateY(-2px);
 }
+/* BREADCRUMBS */
+
+.breadcrumb-section {
+    position: relative;
+    z-index: 1;
+    margin-top:80px;
+    padding-top: 20px;
+    padding-bottom: 15px;
+    background: transparent;
+    border-bottom: 1px solid rgba(199, 154, 91, 0.15);
+}
+
+.breadcrumb {
+    margin-bottom: 0;
+}
+
+.breadcrumb-item,
+.breadcrumb-item a {
+    color: #d6ae73 !important;
+}
+
+.breadcrumb-item a {
+    text-decoration: none;
+    transition: 0.3s ease;
+}
+
+.breadcrumb-item a:hover {
+    color: #c79a5b !important;
+}
+
+.breadcrumb-item.active {
+    color: #ffffff !important;
+}
+
+.breadcrumb-item + .breadcrumb-item::before {
+    color: #d6ae73 !important;
+}
