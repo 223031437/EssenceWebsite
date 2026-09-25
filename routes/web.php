@@ -3,6 +3,9 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\CartController;
+use App\Http\Controllers\CheckoutController;
+use App\Http\Controllers\InquiryController;
+use App\Http\Controllers\AboutController;
 
 Route::get('/', [ProductController::class, 'home']);
 
@@ -27,7 +30,10 @@ Route::patch('/cart/{cart}/decrease', [CartController::class, 'decrease'])
     ->name('cart.decrease');
 
 Route::delete('/cart/{cart}', [CartController::class, 'remove'])
-    ->name('cart.remove');    
+    ->name('cart.remove'); 
+
+    Route::get('/checkout', [CheckoutController::class, 'index'])
+    ->name('checkout.index');   
 
 Route::get('/contact', [InquiryController::class, 'index'])->name('contact.index');
 

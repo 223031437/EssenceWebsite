@@ -86,22 +86,22 @@
 
         </div>
 
-        <div class="top-icons">
+      <div class="top-icons">
 
-            <div class="search-bar">
+    <div class="search-bar">
 
-                <input type="text"
-                placeholder="Search perfumes...">
+        <input type="text"
+        placeholder="Search perfumes...">
 
-                <i class="fa-solid fa-magnifying-glass"></i>
+        <i class="fa-solid fa-magnifying-glass"></i>
 
-            </div>
+    </div>
 
-            <i class="fa-regular fa-user"></i>
+    <i class="fa-regular fa-user"></i>
 
-            <i class="fa-solid fa-bag-shopping"></i>
+    <i class="fa-solid fa-bag-shopping"></i>
 
-        </div>
+</div>
 
     </div>
 

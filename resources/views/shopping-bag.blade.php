@@ -1,365 +1,377 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <title>Shopping Bag</title>
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
 
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
 
-  <style>
-    body {
-      background: linear-gradient(to bottom, #050505, #0d0d0d);
-      color: #d3d3d3;
-      font-family: Arial, Helvetica, sans-serif;
-      font-size: 16px;
-    }
+    <a class="navbar-brand" href="/">
+      ESSENCE OF THE MIDDLE EAST
+    </a>
 
-    h2, h3, h4, h5 {
-      color: #d6ae73;
-      font-weight: bold;
-      text-shadow: 0 0 8px rgba(214, 174, 115, 0.5);
-    }
+    <button class="navbar-toggler" type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav">
 
-    .card {
-      background: linear-gradient(145deg, #1f1f1f, #0d0d0d);
-      border: 1px solid #c79a5b;
-      border-radius: 15px;
-      box-shadow: 0 0 15px rgba(199, 154, 91, 0.25);
-      color: #f5f5f5;
-    }
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-    .card h5 {
-      color: #d6ae73;
-      font-size: 1.3rem;
-      font-weight: bold;
-      text-shadow: 0 0 10px rgba(214, 174, 115, 0.8);
-      letter-spacing: 1px;
-    }
+    <div class="collapse navbar-collapse" id="navbarNav">
 
-    .card p {
-      color: #cfcfcf;
-      font-size: 15px;
-      font-weight: 500;
-    }
+      <ul class="navbar-nav ms-auto">
 
-    .btn-checkout {
-      background-color: #c79a5b;
-      color: #050505;
-      border: none;
-      font-weight: bold;
-    }
+        <li class="nav-item">
+          <a class="nav-link" href="{{ route('cart.index') }}">Home</a>
+        </li>
 
-    .btn-checkout:hover {
-      background-color: #d6ae73;
-      color: black;
-    }
+        <li class="nav-item">
+          <a class="nav-link" href="/shopping-bag">Shop</a>
+        </li>
 
-    .btn-add {
-      background-color: #c79a5b;
-      color: #050505;
-      border: none;
-      font-weight: bold;
-    }
+        <li class="nav-item">
+          <a class="nav-link" href="/checkout">Checkout</a>
+        </li>
 
-    .btn-add:hover {
-      background-color: #d6ae73;
-      color: black;
-    }
+        <li class="nav-item">
+          <a class="nav-link" href="#">Login</a>
+        </li>
 
-    .qty-btn {
-      background-color: #1f1f1f;
-      color: #d6ae73;
-      border: 1px solid #c79a5b;
-      padding: 5px 12px;
-      border-radius: 5px;
-      font-weight: bold;
-    }
+        <li class="nav-item">
+          <a class="nav-link" href="#">Register</a>
+        </li>
 
-    .qty-btn:hover {
-      background-color: #c79a5b;
-      color: black;
-    }
+        <li class="nav-item">
+          <a class="nav-link" href="#">Account</a>
+        </li>
 
-    .list-group-item {
-      background-color: #1f1f1f !important;
-      color: #f5f5f5 !important;
-      border: 1px solid #c79a5b !important;
-      font-weight: 600;
-    }
+      </ul>
 
-    #orderTotal,
-    #tax,
-    #grandTotal {
-      color: #d6ae73 !important;
-      font-weight: bold;
-      text-shadow: 0 0 8px rgba(214, 174, 115, 0.5);
-    }
+    </div>
+  </div>
+</nav>
 
-    span[id^="qty-"] {
-      color: #ffffff;
-      font-weight: bold;
-      font-size: 18px;
-      margin: 0 10px;
-    }
+<style>
+body {
+background: linear-gradient(to bottom, #050505, #0d0d0d);
+color: #d3d3d3;
+font-family: Arial, Helvetica, sans-serif;
+font-size: 16px;
+}
 
-    :root{
-      --gold:#c79a5b;
-      --soft-gold:#d6ae73;
-      --dark:#050505;
-    }
+h2,h3,h4,h5{
+color:#d6ae73;
+font-weight:bold;
+text-shadow:0 0 8px rgba(214,174,115,.5);
+}
 
-    .navbar{
-      background: rgba(0,0,0,0.6);
-      backdrop-filter: blur(10px);
-      padding: 20px 0;
-      border-bottom: 1px solid rgba(199,154,91,0.3);
-    }
+.card{
+background:linear-gradient(145deg,#1f1f1f,#0d0d0d);
+border:1px solid #c79a5b;
+border-radius:15px;
+box-shadow:0 0 15px rgba(199,154,91,.25);
+color:#f5f5f5;
+}
 
-    .navbar-brand{
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.8rem;
-      letter-spacing: 3px;
-      color: var(--soft-gold);
-      font-weight: 600;
-    }
+.card h5{
+color:#d6ae73;
+font-size:1.3rem;
+font-weight:bold;
+text-shadow:0 0 10px rgba(214,174,115,.8);
+letter-spacing:1px;
+}
 
-    .navbar-brand:hover{
-      color: var(--gold);
-    }
+.card p{
+color:#cfcfcf;
+font-size:15px;
+font-weight:500;
+}
 
-    .nav-link{
-      color: #d3d3d3;
-      margin-left: 20px;
-      transition: 0.3s;
-      font-weight: 500;
-    }
+.btn-checkout{
+background:#c79a5b;
+color:#050505;
+border:none;
+font-weight:bold;
+}
 
-    .nav-link:hover{
-      color: var(--soft-gold);
-    }
-  </style>
+.btn-checkout:hover{
+background:#d6ae73;
+color:black;
+}
+
+.btn-add{
+background:#c79a5b;
+color:#050505;
+border:none;
+font-weight:bold;
+}
+
+.btn-add:hover{
+background:#d6ae73;
+color:black;
+}
+
+.qty-btn{
+background:#1f1f1f;
+color:#d6ae73;
+border:1px solid #c79a5b;
+padding:5px 12px;
+border-radius:5px;
+font-weight:bold;
+}
+
+.qty-btn:hover{
+background:#c79a5b;
+color:black;
+}
+
+.list-group-item{
+background:#1f1f1f !important;
+color:#f5f5f5 !important;
+border:1px solid #c79a5b !important;
+font-weight:600;
+}
+
+#orderTotal,
+#tax,
+#grandTotal{
+color:#d6ae73!important;
+font-weight:bold;
+text-shadow:0 0 8px rgba(214,174,115,.5);
+}
+
+span[id^="qty-"]{
+color:#fff;
+font-weight:bold;
+font-size:18px;
+margin:0 10px;
+}
+
+:root{
+--gold:#c79a5b;
+--soft-gold:#d6ae73;
+--dark:#050505;
+}
+
+.navbar{
+background:rgba(0,0,0,.6);
+backdrop-filter:blur(10px);
+padding:20px 0;
+border-bottom:1px solid rgba(199,154,91,.3);
+}
+
+.navbar-brand{
+font-family:'Cormorant Garamond',serif;
+font-size:1.8rem;
+letter-spacing:3px;
+color:var(--soft-gold);
+font-weight:600;
+}
+
+.navbar-brand:hover{
+color:var(--gold);
+}
+
+.nav-link{
+color:#d3d3d3;
+margin-left:20px;
+transition:.3s;
+font-weight:500;
+}
+
+.nav-link:hover{
+color:var(--soft-gold);
+}
+</style>
+
 </head>
 
 <body class="container py-5">
 
-<nav class="navbar navbar-expand-lg mb-5">
-    <div class="container">
+<h2 class="text-center mb-4">🛍 Shopping Bag – Perfume Catalog</h2>
 
-        <a class="navbar-brand" href="{{ url('/') }}">
-            ESSENCE OF THE MIDDLE EAST
-        </a>
+<h3>Ladies Perfumes</h3>
 
-        <button class="navbar-toggler"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navbarNav">
-
-            <span class="navbar-toggler-icon"></span>
-
-        </button>
-
-        <div class="collapse navbar-collapse"
-             id="navbarNav">
-
-            <ul class="navbar-nav ms-auto">
-
-                <li class="nav-item">
-                    <a class="nav-link"
-                       href="{{ url('/') }}">
-                        Home
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link"
-                       href="{{ url('/catalog') }}">
-                        Collection
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link"
-                       href="{{ route('cart.index') }}">
-                        Shopping Bag
-                    </a>
-                </li>
-
-            </ul>
-
-        </div>
-
-    </div>
-</nav>
-
-  <h2 class="text-center mb-5">
-    Shopping Bag
-</h2>
 <div class="row">
 
-@php
-    $subtotal = 0;
-@endphp
+<div class="col-md-4 mb-3">
+<div class="card p-3 text-center">
 
-@forelse($cartItems as $item)
+<h5>Tommy Girl</h5>
 
-@php
-    $lineTotal = $item->product->price * $item->quantity;
-    $subtotal += $lineTotal;
-@endphp
+<p>Category: Ladies</p>
 
-<div class="col-lg-12 mb-4">
-    <div class="card p-3">
-        <div class="row align-items-center">
-            <div class="col-md-2">
-                <img
-                    src="{{ asset('images/'.$item->product->image) }}"
-                    class="img-fluid rounded"
-                    alt="{{ $item->product->name }}">
-            </div>
+<p>Longevity: Moderate</p>
 
-            <div class="col-md-3">
-                <h5>{{ $item->product->name }}</h5>
+<p>Price: R250</p>
 
-                <p>
-                    {{ $item->product->category }}
-                </p>
-                <p>
-                    {{ $item->product->longevity }}
-                </p>
-            </div>
+<div>
 
-            <div class="col-md-2">
+<button class="qty-btn" onclick="changeQty('Tommy Girl',-1)">-</button>
 
-                <strong>
-                    R{{ number_format($item->product->price,2) }}
-                </strong>
+<span id="qty-Tommy Girl">0</span>
 
-            </div>
-
-            <div class="col-md-3">
-
-                <div class="d-flex align-items-center">
-
-                    <form action="{{ route('cart.decrease',$item) }}" method="POST">
-                        @csrf
-                        @method('PATCH')
-
-                        <button type="submit" class="qty-btn">
-                            -
-                        </button>
-                    </form>
-
-                    <span class="mx-3 fw-bold">
-                        {{ $item->quantity }}
-                    </span>
-
-                    <form action="{{ route('cart.increase',$item) }}" method="POST">
-                        @csrf
-                        @method('PATCH')
-
-                        <button type="submit" class="qty-btn">
-                            +
-                        </button>
-                    </form>
-
-                </div>
-
-            </div>
-
-            <div class="col-md-2 text-end">
-
-            <strong>
-                R{{ number_format($lineTotal,2) }}
-            </strong>
-
-            <form
-                action="{{ route('cart.remove',$item) }}"
-                method="POST"
-                class="mt-3">
-
-                @csrf
-
-                @method('DELETE')
-
-                <button
-                    type="submit"
-                    class="btn btn-danger btn-sm">
-
-                    Remove
-
-                </button>
-
-            </form>
-
-         </div>
-        </div>
-    </div>
-</div>
-
-@empty
-
-<div class="text-center py-5">
-
-    <h3>Your shopping bag is empty.</h3>
-    <a href="{{ url('/catalog') }}"
-       class="btn btn-checkout mt-3">
-
-        Continue Shopping
-    </a>
+<button class="qty-btn" onclick="changeQty('Tommy Girl',1)">+</button>
 
 </div>
 
-@endforelse
+<button class="btn btn-add mt-2" onclick="addToCart('Tommy Girl',250)">
+Add to Bag
+</button>
+
+</div>
+</div>
 
 </div>
 
- 
-  @php
+<h3>Men Perfumes</h3>
 
-$tax = $subtotal * 0.15;
+<div class="row">
 
-$grandTotal = $subtotal + $tax;
+<div class="col-md-4 mb-3">
 
-@endphp
+<div class="card p-3 text-center">
 
-<div class="card p-4 mt-5">
+<h5>Tommy Men</h5>
 
-    <h3>Order Summary</h3>
+<p>Category: Men</p>
 
-    <hr>
+<p>Longevity: Moderate</p>
 
-    <p>
-        Subtotal
-        <span class="float-end">
-            R{{ number_format($subtotal,2) }}
-        </span>
-    </p>
+<p>Price: R180</p>
 
-    <p>
-        VAT (15%)
-        <span class="float-end">
-            R{{ number_format($tax,2) }}
-        </span>
-    </p>
+<div>
 
-    <hr>
+<button class="qty-btn" onclick="changeQty('Tommy Men',-1)">-</button>
 
-    <h4>
-        Grand Total
-        <span class="float-end">
+<span id="qty-Tommy Men">0</span>
 
-            R{{ number_format($grandTotal,2) }}
-        </span>
-    </h4>
-
-    <a
-        href="#"
-        class="btn btn-checkout w-100 mt-4">
-        Proceed to Checkout
-    </a>
+<button class="qty-btn" onclick="changeQty('Tommy Men',1)">+</button>
 
 </div>
+
+<button class="btn btn-add mt-2" onclick="addToCart('Tommy Men',180)">
+Add to Bag
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<h3>Unisex Perfumes</h3>
+
+<div class="row">
+
+<div class="col-md-4 mb-3">
+
+<div class="card p-3 text-center">
+
+<h5>Tobacco Vanille</h5>
+
+<p>Category: Unisex</p>
+
+<p>Longevity: Very Long</p>
+
+<p>Price: R300</p>
+
+<div>
+
+<button class="qty-btn" onclick="changeQty('Tobacco Vanille',-1)">-</button>
+
+<span id="qty-Tobacco Vanille">0</span>
+
+<button class="qty-btn" onclick="changeQty('Tobacco Vanille',1)">+</button>
+
+</div>
+
+<button class="btn btn-add mt-2" onclick="addToCart('Tobacco Vanille',300)">
+Add to Bag
+</button>
+
+</div>
+
+</div>
+
+</div>
+
+<h3>Order Summary</h3>
+
+<ul id="cart" class="list-group mb-3"></ul>
+
+<p>Order Total: <span id="orderTotal">R0.00</span></p>
+
+<p>Tax (15%): <span id="tax">R0.00</span></p>
+
+<h5>Grand Total: <span id="grandTotal">R0.00</span></h5>
+
+<button class="btn btn-checkout mt-3 w-100" onclick="checkout()">
+Checkout
+</button>
+<script>
+    let cartItems = {};
+
+    function addToCart(product, price) {
+      const qty = parseInt(document.getElementById('qty-' + product).textContent);
+
+      if (qty > 0) {
+        if (!cartItems[product]) {
+          cartItems[product] = { qty: 0, price: price };
+        }
+
+        cartItems[product].qty += qty;
+        updateCart();
+
+      } else {
+        alert("Please select quantity before adding to cart.");
+      }
+    }
+
+    function changeQty(product, amount) {
+      const qtySpan = document.getElementById('qty-' + product);
+      let currentQty = parseInt(qtySpan.textContent);
+      currentQty = Math.max(0, currentQty + amount);
+      qtySpan.textContent = currentQty;
+    }
+
+    function updateCart() {
+      const cartList = document.getElementById('cart');
+      cartList.innerHTML = '';
+
+      let total = 0;
+
+      for (let product in cartItems) {
+        const item = cartItems[product];
+        const lineTotal = item.qty * item.price;
+
+        const li = document.createElement('li');
+        li.className = 'list-group-item';
+        li.textContent = `${product} x${item.qty} - R${lineTotal.toFixed(2)}`;
+
+        cartList.appendChild(li);
+        total += lineTotal;
+      }
+
+      document.getElementById('orderTotal').textContent = `R${total.toFixed(2)}`;
+
+      const tax = total * 0.15;
+      document.getElementById('tax').textContent = `R${tax.toFixed(2)}`;
+
+      document.getElementById('grandTotal').textContent =
+        `R${(total + tax).toFixed(2)}`;
+    }
+
+    function checkout() {
+      localStorage.setItem("cartItems", JSON.stringify(cartItems));
+      window.location.href = "{{ route('checkout') }}";
+    }
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
