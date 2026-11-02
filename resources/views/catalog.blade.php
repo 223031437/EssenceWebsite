@@ -23,89 +23,7 @@
 
 <body>
 
-<nav class="navbar navbar-expand-lg">
-
-    <div class="container-fluid px-5">
-
-
-        <a class="navbar-brand" href="#">
-
-            <div class="logo-text">
-
-                <span class="main-logo">
-                    ESSENCE
-                </span>
-
-                <span class="sub-logo">
-                    OF THE MIDDLE EAST
-                </span>
-
-            </div>
-
-        </a>
-
-        <button class="navbar-toggler bg-light"
-        type="button"
-        data-bs-toggle="collapse"
-        data-bs-target="#navMenu">
-
-            <span class="navbar-toggler-icon"></span>
-
-        </button>
-
-        <div class="collapse navbar-collapse justify-content-center"
-        id="navMenu">
-
-            <ul class="navbar-nav">
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/') }}">
-                        Home
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        Collection
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="About.html">
-                        About Us
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="ContactUs.html">
-                        Contact
-                    </a>
-                </li>
-
-            </ul>
-
-        </div>
-
-      <div class="top-icons">
-
-    <div class="search-bar">
-
-        <input type="text"
-        placeholder="Search perfumes...">
-
-        <i class="fa-solid fa-magnifying-glass"></i>
-
-    </div>
-
-    <i class="fa-regular fa-user"></i>
-
-    <i class="fa-solid fa-bag-shopping"></i>
-
-</div>
-
-    </div>
-
-</nav>
+@include('partials.header')
 
 <section class="hero-section">
 
@@ -135,67 +53,24 @@
             <div class="col-lg-2 mb-4">
 
                 <div class="filter-box">
-
-                    <h3>
-                        FILTERS
-                    </h3>
-
-                    <hr>
-
-                    <div class="filter-group">
-
-                        <h5>Category</h5>
-
-                        <button class="filter-btn active-btn">
-                            All
-                        </button>
-
-                        <button class="filter-btn">
-                            Ladies
-                        </button>
-
-                        <button class="filter-btn">
-                            Men
-                        </button>
-
-                        <button class="filter-btn">
-                            Unisex
-                        </button>
-
-                    </div>
-
-                    <div class="filter-group">
-
-                        <h5>Longevity</h5>
-
-                        <label><input type="checkbox"> Moderate</label>
-
-                        <label><input type="checkbox"> Long</label>
-
-                        <label><input type="checkbox"> Very Long</label>
-
-                    </div>
-
-                    <div class="filter-group">
-
-                        <h5>Top Notes</h5>
-
-                        <label><input type="checkbox"> Citrus</label>
-
-                        <label><input type="checkbox"> Floral</label>
-
-                        <label><input type="checkbox"> Woody</label>
-
-                        <label><input type="checkbox"> Sweet</label>
-
-                    </div>
-
-                    <button class="reset-btn">
-                        Reset Filters
-                    </button>
-
+                    <h3>FILTERS</h3><hr>
+                    <form method="GET" action="{{ route('catalog') }}">
+                        <input type="hidden" name="search" value="{{ request('search') }}">
+                        <div class="filter-group"><h5>Category</h5>
+                            @foreach(['All'=>null,'Ladies'=>'Ladies','Men'=>'Men','Unisex'=>'Unisex'] as $label=>$value)
+                                <button class="filter-btn {{ request('category') === $value || ($label==='All' && !request('category')) ? 'active-btn' : '' }}" type="submit" name="category" value="{{ $value }}">{{ $label }}</button>
+                            @endforeach
+                        </div>
+                        <div class="filter-group"><h5>Longevity</h5>
+                            @foreach(['Moderate','Long','Very Long'] as $value)<label><input type="checkbox" name="longevity[]" value="{{ $value }}" {{ in_array($value,(array)request('longevity',[]),true) ? 'checked' : '' }}> {{ $value }}</label>@endforeach
+                        </div>
+                        <div class="filter-group"><h5>Top Notes</h5>
+                            @foreach(['Citrus','Floral','Woody','Sweet'] as $value)<label><input type="checkbox" name="top_note[]" value="{{ $value }}" {{ in_array($value,(array)request('top_note',[]),true) ? 'checked' : '' }}> {{ $value }}</label>@endforeach
+                        </div>
+                        <button class="reset-btn" type="button" onclick="window.location='{{ route('catalog') }}'">Reset Filters</button>
+                        <button class="reset-btn mt-2" type="submit">Apply Filters</button>
+                    </form>
                 </div>
-
             </div>
             
             <div class="col-lg-10">
@@ -225,7 +100,7 @@
                     </span>
 
                     <p>
-                        {{ $product->scent_profile }}
+                        {{ $product->description }}
                     </p>
 
                     <span class="tag">
@@ -253,6 +128,8 @@
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+@include('partials.footer')
 
 </body>
 </html>
