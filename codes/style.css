@@ -1,0 +1,467 @@
+:root{
+    --gold:#c79a5b;
+    --soft-gold:#d6ae73;
+    --dark:#050505;
+}
+
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+body{
+    background:linear-gradient( rgba(0,0,0,0.95), rgba(0,0,0,0.7)), url('../images/background.png');
+    font-family:'Poppins', sans-serif;
+    color:white;
+    overflow-x:hidden;
+    padding-top:0;
+}
+
+/*NAVBAR*/
+
+.navbar{
+    position:fixed;
+    top:0;
+    width:100%;
+    z-index:999;
+    padding:15px 0; /* FIX: reduced height */
+    background:rgba(0,0,0,0.65);
+    backdrop-filter:blur(12px);
+    border-bottom:1px solid rgba(255,255,255,0.05);
+}
+
+/*LOGO*/
+
+.logo-text{
+    display:flex;
+    flex-direction:column;
+}
+
+.main-logo{
+    font-family:'Cinzel', serif;
+    font-size:2.4rem;
+    color:white;
+    letter-spacing:3px;
+}
+
+.sub-logo{
+    color:var(--soft-gold);
+    font-size:0.8rem;
+    letter-spacing:4px;
+}
+
+/*NAV LINKS*/
+
+.navbar-nav{
+    gap:25px;
+}
+
+.nav-link{
+    color:white;
+    text-transform:uppercase;
+    font-size:0.9rem;
+    letter-spacing:1px;
+    transition:0.3s;
+}
+
+.nav-link:hover,
+.nav-link.active{
+    color:var(--gold);
+}
+
+/*ICONS*/
+
+.top-icons{
+    display:flex;
+    align-items:center;
+    gap:20px;
+}
+
+.top-icons i{
+    color:white;
+    font-size:1.2rem;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.top-icons i:hover{
+    color:var(--gold);
+}
+
+/*SEARCH*/
+
+.search-bar{
+    position:relative;
+}
+
+.search-bar input{
+    width:280px;
+    padding:12px 45px 12px 20px;
+    border-radius:40px;
+    border:1px solid rgba(255,255,255,0.1);
+    background:rgba(255,255,255,0.05);
+    color:white;
+    outline:none;
+}
+
+.search-bar i{
+    position:absolute;
+    right:18px;
+    top:50%;
+    transform:translateY(-50%);
+}
+
+/*HERO*/
+
+.hero-section{
+    min-height:75vh;
+
+    padding-top:90px;  /* FIX: proper spacing under navbar */
+    padding-bottom:60px;
+
+    background:
+    linear-gradient(rgba(0,0,0,0.7),
+    rgba(0,0,0,0.88)),
+    url('../images/background.png');
+
+    background-size:cover;
+    background-position:center;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    text-align:center;
+
+    padding-left:20px;
+    padding-right:20px;
+}
+
+.hero-content h1{
+    font-family:'Cinzel', serif;
+    font-size:4.5rem;
+    line-height:1.2;
+    color:var(--soft-gold);
+    letter-spacing:5px;
+    text-shadow:0 0 20px rgba(199,154,91,0.4);
+}
+
+.hero-content p{
+    font-size:1.3rem;
+    margin-top:15px;
+    color:#f2f2f2;
+}
+
+.hero-content span{
+    color:var(--gold);
+    font-style:italic;
+}
+
+/*CATALOG*/
+
+.catalog-section{
+    margin-top:-40px;
+    position:relative;
+    z-index:10;
+    padding:0 30px 80px;
+}
+
+/*FILTER BOX*/
+
+.filter-box{
+    background:rgba(15,15,15,0.95);
+    border:1px solid rgba(199,154,91,0.3);
+    border-radius:20px;
+    padding:30px;
+}
+
+.filter-box h3{
+    color:var(--soft-gold);
+    font-family:'Cinzel', serif;
+    margin-bottom:20px;
+}
+
+.filter-box hr{
+    border-color:rgba(255,255,255,0.1);
+}
+
+.filter-group{
+    margin-bottom:35px;
+}
+
+.filter-group h5{
+    color:var(--gold);
+    margin-bottom:15px;
+    text-transform:uppercase;
+    font-size:0.9rem;
+    letter-spacing:2px;
+}
+
+/*FILTER BUTTONS*/
+
+.filter-btn{
+    width:100%;
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.1);
+    color:white;
+    padding:12px;
+    border-radius:12px;
+    margin-bottom:10px;
+    transition:0.3s;
+}
+
+.filter-btn:hover,
+.active-btn{
+    background:linear-gradient(to right,#c79a5b,#d6ae73);
+    color:black;
+}
+
+/*CHECKBOX LABELS*/
+
+.filter-group label{
+    display:block;
+    margin-bottom:12px;
+    color:#dddddd;
+}
+
+/*RESET BUTTON*/
+
+.reset-btn{
+    width:100%;
+    padding:14px;
+    border:none;
+    border-radius:14px;
+    background:linear-gradient(to right,#c79a5b,#d6ae73);
+    color:black;
+    font-weight:600;
+    margin-top:10px;
+}
+
+/*PERFUME CARDS*/
+
+.perfume-card{
+    position:relative;
+    background:rgba(10,10,10,0.95);
+    border:1px solid rgba(199,154,91,0.4);
+    border-radius:22px;
+    overflow:hidden;
+    transition:0.4s;
+    height:100%;
+}
+
+.perfume-card:hover{
+    transform:translateY(-10px);
+    box-shadow:0 0 30px rgba(199,154,91,0.25);
+}
+
+.perfume-card img{
+    width:100%;
+    height:320px;
+    object-fit:contain;
+    background:black;
+    padding:20px;
+}
+
+.card-content{
+    text-align:center;
+    padding:0 20px 30px;
+}
+
+.card-content h3{
+    font-family:'Cinzel', serif;
+    color:var(--soft-gold);
+    font-size:1.8rem;
+    margin-bottom:8px;
+}
+
+.category{
+    color:var(--gold);
+    display:block;
+    margin-bottom:10px;
+}
+
+.card-content p{
+    color:#e2e2e2;
+    font-size:0.95rem;
+    line-height:1.7;
+}
+
+/*TAG*/
+
+.tag{
+    display:inline-block;
+    margin-top:15px;
+    padding:8px 18px;
+    border-radius:30px;
+    background:linear-gradient(to right,#c79a5b,#d6ae73);
+    color:black;
+    font-size:0.8rem;
+    font-weight:600;
+}
+
+/*HEART ICON*/
+
+.heart{
+    position:absolute;
+    top:20px;
+    right:20px;
+    color:rgb(245, 245, 245);
+    font-size:1.3rem;
+    cursor:pointer;
+}
+
+/*RESPONSIVE*/
+
+@media(max-width:992px){
+    .hero-content h1{
+        font-size:3.5rem;
+    }
+
+    .search-bar input{
+        width:100%;
+    }
+}
+
+@media(max-width:768px){
+    .hero-content h1{
+        font-size:2.5rem;
+    }
+
+    .catalog-section{
+        padding:0 15px 50px;
+    }
+
+    .main-logo{
+        font-size:1.7rem;
+    }
+}
+body {
+  margin: 0;
+  font-family: Arial, sans-serif;
+  color: #d3d3d3;
+
+  background:
+    linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)),
+    url("images/background.jpeg");
+
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 40px;
+}
+
+.brand {
+  font-size: 23px;
+  color: #c79a5b;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+}
+
+.nav-links a {
+  color: #c79a5b;
+  margin-left: 20px;
+  text-decoration: none;
+}
+
+.nav-links a:hover {
+  color: #d6ae73;
+}
+
+.brand-title {
+  text-align: center;
+  font-size: 45px;
+  color: #c79a5b;
+}
+
+.product-grid {
+  display: flex;
+  justify-content: center;
+  gap: 25px;
+  flex-wrap: wrap;
+  padding: 40px;
+}
+
+.product-card {
+  width: 220px;
+  background: rgba(31,31,31,0.88);
+  padding: 15px;
+  text-align: center;
+  border-radius: 14px;
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+.product-card:hover {
+  transform: translateY(-8px) scale(1.04);
+  box-shadow: 0 0 25px rgba(199,154,91,0.5);
+}
+
+.product-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.product-detail-container {
+  padding: 50px;
+}
+
+.product-detail-card {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  background: rgba(31,31,31,0.88);
+  padding: 30px;
+  border-radius: 18px;
+}
+
+.product-hero,
+.product-info {
+  padding: 10px;
+}
+
+.hero-img {
+  width: 220px;
+  max-width: 100%;
+  border-radius: 14px;
+}
+
+#title,
+#reviewTitle {
+  color: #d6ae73;
+}
+
+.price {
+  font-size: 20px;
+  color: #d6ae73;
+  font-weight: bold;
+}
+
+.section-title {
+  color: #c79a5b;
+  font-size: 14px;
+  margin-top: 15px;
+  text-transform: uppercase;
+}
+
+.review-box {
+  background: rgba(0,0,0,0.25);
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 10px;
+  border: 1px solid rgba(199,154,91,0.2);
+}
+
+.btn {
+  background: #c79a5b;
+  border: none;
+  padding: 10px 15px;
+  border-radius: 8px;
+  cursor: pointer;
+}

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Essence Reviews</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+  <div class="brand">Essence of the Middle East</div>
+
+  <nav class="nav-links">
+    <a href="index.html">Products</a>
+    <a href="reviews.html">Reviews</a>
+  </nav>
+</header>
+
+<h1 class="brand-title">Customer Reviews</h1>
+
+<section class="product-grid">
+
+  <div class="product-card" onclick="showReview('away')">
+    <img src="images/awaybreezeedp.jpeg">
+    <h2>Rush</h2>
+    <p id="desc">Fresh citrus floral blend</p>
+    <div class="stars">★★★★☆</div>
+    <p class="mini-desc">Click to view reviews</p>
+  </div>
+
+  <div class="product-card" onclick="showReview('vanilla')">
+    <img src="images/sweetvanilla.jpeg">
+    <h2>Vanilla 28</h2>
+    <p id="desc">Warm creamy vanilla blend.</p>
+    <div class="stars">★★★★★</div>
+    <p class="mini-desc">Click to view reviews</p>
+  </div>
+
+  <div class="product-card" onclick="showReview('aura')">
+    <img src="images/aurabluedeep.jpeg">
+    <h2>The One</h2>
+    <p id="desc">Fresh aquatic scent</p>
+    <div class="stars">★★★☆☆</div>
+    <p class="mini-desc">Click to view reviews</p>
+  </div>
+
+</section>
+
+<section id="review-detail" class="hidden product-detail-container">
+
+  <button class="btn" onclick="backToReviews()">← Back</button>
+
+  <div class="product-detail-card">
+
+    <div class="product-hero">
+      <img id="reviewImage" class="hero-img">
+      <h2 id="reviewTitle"></h2>
+      <p id="reviewSummary"></p>
+    </div>
+
+    <div class="product-info">
+      <h3 class="section-title">Customer Reviews</h3>
+      <div id="reviewContent"></div>
+    </div>
+
+  </div>
+</section>
+
+<div class="image-modal" id="imageModal" onclick="closeImage()">
+  <img id="modalImg">
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

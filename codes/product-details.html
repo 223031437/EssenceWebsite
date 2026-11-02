@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Essence of the Middle East</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="navbar">
+  <div class="brand">Essence of the Middle East</div>
+
+  <nav class="nav-links">
+    <a href="index.html">Products</a>
+    <a href="reviews.html">Reviews</a>
+  </nav>
+</header>
+
+<h1 class="brand-title">Essence Fragrances</h1>
+
+<section class="product-grid">
+
+  <div class="product-card" onclick="showProduct('away')">
+    <img src="images/awaybreezeedp.jpeg">
+    <h2>Rush</h2>
+    <div class="stars">★★★★☆</div>
+    <p class="mini-desc">Fresh citrus floral blend</p>
+    <p class="bottle-info">50ml Eau de Parfum</p>
+  </div>
+
+  <div class="product-card" onclick="showProduct('vanilla')">
+    <img src="images/sweetvanilla.jpeg">
+    <h2>Vanilla 28</h2>
+    <div class="stars">★★★★★</div>
+    <p class="mini-desc">Warm creamy vanilla blend.</p>
+    <p class="bottle-info">50ml Eau de Parfum</p>
+  </div>
+
+  <div class="product-card" onclick="showProduct('aura')">
+    <img src="images/aurabluedeep.jpeg">
+    <h2>The One</h2>
+    <div class="stars">★★★☆☆</div>
+    <p class="mini-desc">Fresh aquatic scent</p>
+    <p class="bottle-info">50ml Eau de Parfum</p>
+  </div>
+
+</section>
+
+<section id="product-detail" class="hidden product-detail-container">
+
+  <button class="btn" onclick="backToGrid()">← Back</button>
+
+  <div class="product-detail-card">
+
+    <div class="product-hero">
+      <img id="productImage" class="hero-img">
+      <h2 id="title"></h2>
+      <div class="stars" id="stars"></div>
+      <p id="desc"></p>
+      <p id="price" class="price"></p>
+      <p id="addToCart" class="btn">Add to Cart</p>
+    </div>
+
+    <div class="product-info">
+
+      <h3 class="section-title">Details</h3>
+
+      <div id="moreInfo"></div>
+
+      <h3 class="section-title">Scent Notes</h3>
+
+      <div id="notes"></div>
+
+      <h3 class="section-title">Customer Reviews</h3>
+
+      <div id="reviews"></div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<div class="image-modal" id="imageModal" onclick="closeImage()">
+  <img id="modalImg">
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>

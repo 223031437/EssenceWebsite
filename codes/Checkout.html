@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Checkout</title>
+
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+<nav class="navbar navbar-expand-lg">
+  <div class="container">
+
+    
+    <a class="navbar-brand" href="#">
+      ESSENCE OF THE MIDDLE EAST
+    </a>
+
+    
+    <button class="navbar-toggler" type="button"
+      data-bs-toggle="collapse"
+      data-bs-target="#navbarNav">
+
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    
+    <div class="collapse navbar-collapse" id="navbarNav">
+
+      <ul class="navbar-nav ms-auto">
+
+        <li class="nav-item">
+          <a class="nav-link" href="index.html">Home</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="shopping.html">Shop</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="checkout.html">Checkout</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#">Login</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#">Register</a>
+        </li>
+
+        <li class="nav-item">
+          <a class="nav-link" href="#">Account</a>
+        </li>
+
+      </ul>
+
+    </div>
+  </div>
+</nav>
+
+  <style>
+    body {
+      background: linear-gradient(to bottom, #050505, #0d0d0d);
+      color: #d3d3d3;
+      font-family: Arial, Helvetica, sans-serif;
+      font-size: 16px;
+    }
+
+    h2, h3, h4, h5 {
+      color: #d6ae73;
+      font-weight: bold;
+      text-shadow: 0 0 8px rgba(214, 174, 115, 0.5);
+    }
+
+    .card {
+      background: linear-gradient(145deg, #1f1f1f, #0d0d0d);
+      border: 1px solid #c79a5b;
+      border-radius: 15px;
+      box-shadow: 0 0 15px rgba(199, 154, 91, 0.25);
+      color: #f5f5f5;
+    }
+
+    .btn-place {
+      background-color: #c79a5b;
+      color: #050505;
+      border: none;
+      font-weight: bold;
+    }
+
+    .btn-place:hover {
+      background-color: #d6ae73;
+      color: black;
+    }
+
+    .list-group-item {
+      background-color: #1f1f1f !important;
+      color: #f5f5f5 !important;
+      border: 1px solid #c79a5b !important;
+      font-weight: 600;
+    }
+
+    #orderTotal,
+    #tax,
+    #grandTotal {
+      color: #d6ae73 !important;
+      font-weight: bold;
+      text-shadow: 0 0 8px rgba(214, 174, 115, 0.5);
+    }
+
+    .form-control,
+    .form-select {
+      background-color: #1f1f1f;
+      border: 1px solid #9e9e9e;
+      color: #f5f5f5;
+    }
+
+    .form-control:focus,
+    .form-select:focus {
+      background-color: #1f1f1f;
+      color: white;
+      border-color: #d6ae73;
+      box-shadow: 0 0 10px rgba(214, 174, 115, 0.5);
+    }
+
+    .form-control::placeholder {
+      color: #9e9e9e;
+    }
+    :root{
+  --gold:#c79a5b;
+  --soft-gold:#d6ae73;
+  --dark:#050505;
+}
+
+
+.navbar{
+  background: rgba(0,0,0,0.6);
+  backdrop-filter: blur(10px);
+  padding: 20px 0;
+  border-bottom: 1px solid rgba(199,154,91,0.3);
+}
+
+.navbar-brand{
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  letter-spacing: 3px;
+  color: var(--soft-gold);
+  font-weight: 600;
+}
+
+.navbar-brand:hover{
+  color: var(--gold);
+}
+
+.nav-link{
+  color: #d3d3d3;
+  margin-left: 20px;
+  transition: 0.3s;
+  font-weight: 500;
+}
+
+.nav-link:hover{
+  color: var(--soft-gold);
+}
+  </style>
+</head>
+
+<body class="container py-5">
+
+  <h2 class="text-center mb-4">💳 Checkout</h2>
+
+  <form class="card p-4 mb-4">
+
+    <h4>Shopping Information</h4>
+
+    <input type="text" class="form-control mb-2" placeholder="Full Name" required>
+    <input type="text" class="form-control mb-2" placeholder="Address" required>
+    <input type="text" class="form-control mb-2" placeholder="City" required>
+    <input type="text" class="form-control mb-2" placeholder="Postal Code" required>
+    <input type="text" class="form-control mb-2" placeholder="Phone Number" required>
+
+    <h4 class="mt-3">Delivery Method</h4>
+
+    <select class="form-select mb-2"
+            id="deliveryMethod"
+            onchange="updateDelivery()"
+            required>
+
+      <option selected disabled>
+        Choose delivery option
+      </option>
+
+      <option value="0">
+        Standard Shipping (FREE)
+      </option>
+
+      <option value="40">
+        Express Shipping (+ R40.00)
+      </option>
+
+    </select>
+
+    <h4 class="mt-3">Payment Information</h4>
+
+    <input type="text" class="form-control mb-2" placeholder="Card Number" required>
+    <input type="text" class="form-control mb-2" placeholder="Expiry Date (MM/YY)" required>
+    <input type="text" class="form-control mb-2" placeholder="CVV" required>
+
+    <h3 class="mt-4">Order Summary</h3>
+
+    <ul id="checkoutCart" class="list-group mb-3"></ul>
+
+    <p>Order Total: <span id="orderTotal">R0.00</span></p>
+    <p>Tax: <span id="tax">R0.00</span></p>
+    <h5>Grand Total: <span id="grandTotal">R0.00</span></h5>
+
+    <button type="submit" class="btn btn-place mt-3 w-100">
+      Place Order
+    </button>
+
+  </form>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script>
+
+    let baseTotal = 0;
+    let taxValue = 0;
+
+    window.onload = function () {
+
+      const cartItems =
+        JSON.parse(localStorage.getItem("cartItems")) || {};
+
+      const checkoutCart =
+        document.getElementById("checkoutCart");
+
+      checkoutCart.innerHTML = "";
+
+      baseTotal = 0;
+
+      for (let product in cartItems) {
+
+        const item = cartItems[product];
+
+        const lineTotal =
+          item.qty * item.price;
+
+        const li =
+          document.createElement("li");
+
+        li.className =
+          "list-group-item";
+
+        li.textContent =
+          `${product} x${item.qty} - R${lineTotal.toFixed(2)}`;
+
+        checkoutCart.appendChild(li);
+
+        baseTotal += lineTotal;
+      }
+
+      taxValue =
+        baseTotal * 0.15;
+
+      document.getElementById("orderTotal")
+        .textContent =
+        `R${baseTotal.toFixed(2)}`;
+
+      document.getElementById("tax")
+        .textContent =
+        `R${taxValue.toFixed(2)}`;
+
+      updateGrandTotal(0);
+    };
+
+    function updateDelivery() {
+
+      const deliveryFee =
+        parseFloat(
+          document.getElementById("deliveryMethod").value
+        ) || 0;
+
+      updateGrandTotal(deliveryFee);
+    }
+
+    function updateGrandTotal(deliveryFee) {
+
+      const grandTotal =
+        baseTotal + taxValue + deliveryFee;
+
+      document.getElementById("grandTotal")
+        .textContent =
+        `R${grandTotal.toFixed(2)}`;
+    }
+
+    document.querySelector(".btn-place")
+      .addEventListener("click", function(event) {
+
+      event.preventDefault();
+
+      const orderNumber =
+        "ORD-" + Math.floor(Math.random() * 1000000);
+
+      const cartItems =
+        JSON.parse(localStorage.getItem("cartItems")) || {};
+
+      let total = 0;
+
+      for (let product in cartItems) {
+        total += cartItems[product].qty *
+                 cartItems[product].price;
+      }
+
+      const tax = total * 0.15;
+
+      const deliveryFee =
+        parseFloat(
+          document.getElementById("deliveryMethod").value
+        ) || 0;
+
+      const grandTotal =
+        total + tax + deliveryFee;
+
+      const receiptHTML = `
+        <div class="card p-4 mt-4 text-center">
+
+          <h4>✅ Order Placed Successfully!</h4>
+
+          <p>
+            Order Number:
+            <strong style="color:#d6ae73;">
+              ${orderNumber}
+            </strong>
+          </p>
+
+          <h5>Order Summary</h5>
+
+          <ul class="list-group mb-3">
+
+            ${Object.keys(cartItems).map(product => {
+
+              const item =
+                cartItems[product];
+
+              const lineTotal =
+                item.qty * item.price;
+
+              return `
+                <li class="list-group-item">
+                  ${product} x${item.qty} - R${lineTotal.toFixed(2)}
+                </li>
+              `;
+            }).join('')}
+
+          </ul>
+
+          <p>Order Total: <span style="color:#d6ae73;">R${total.toFixed(2)}</span></p>
+          <p>Tax: <span style="color:#d6ae73;">R${tax.toFixed(2)}</span></p>
+          <p>Delivery: <span style="color:#d6ae73;">R${deliveryFee.toFixed(2)}</span></p>
+
+          <h5>Grand Total: <span style="color:#d6ae73;">R${grandTotal.toFixed(2)}</span></h5>
+
+          <button class="btn btn-place mt-3"
+            onclick="trackOrder('${orderNumber}')">
+            Track Your Order
+          </button>
+
+        </div>
+      `;
+
+      document.querySelector("form").innerHTML =
+        receiptHTML;
+    });
+
+    function trackOrder(orderNumber) {
+      alert(
+        "Tracking Order: " +
+        orderNumber +
+        "\nYour order is being processed!"
+      );
+    }
+
+  </script>
+
+</body>
+</html>
