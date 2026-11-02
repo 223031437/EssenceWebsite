@@ -25,92 +25,7 @@
 
 <body>
 
-<nav class="navbar navbar-expand-lg">
-
-    <div class="container-fluid px-5">
-
-        <a class="navbar-brand" href="{{ url('/') }}">
-
-            <div class="logo-text">
-
-                <span class="main-logo">
-                    ESSENCE
-                </span>
-
-                <span class="sub-logo">
-                    OF THE MIDDLE EAST
-                </span>
-
-            </div>
-
-        </a>
-
-        <button class="navbar-toggler bg-light"
-                type="button"
-                data-bs-toggle="collapse"
-                data-bs-target="#navMenu">
-
-            <span class="navbar-toggler-icon"></span>
-
-        </button>
-
-
-        <div class="collapse navbar-collapse justify-content-center"
-             id="navMenu">
-
-            <ul class="navbar-nav">
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/') }}">
-                        Home
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url('/catalog') }}">
-                        Catalog
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        About Us
-                    </a>
-                </li>
-
-                <li class="nav-item">
-                    <a class="nav-link" href="#">
-                        Contact
-                    </a>
-                </li>
-
-            </ul>
-
-        </div>
-
-
-        <div class="top-icons">
-
-            <div class="search-bar">
-
-                <input
-                    type="text"
-                    placeholder="Search perfumes..."
-                    aria-label="Search perfumes">
-
-                <i class="fa-solid fa-magnifying-glass"></i>
-
-            </div>
-
-            <i class="fa-regular fa-user"></i>
-
-            <i class="fa-solid fa-bag-shopping"></i>
-
-        </div>
-
-    </div>
-
-</nav>
+@include('partials.header')
 
 <section class="breadcrumb-section">
 
@@ -231,13 +146,15 @@
                         </button>
 
                     <button class="btn gold-btn"
-                            type="button">
+                            type="submit" name="buy_now" value="1">
 
                         Buy Now
 
                     </button>
 
+                    <input type="hidden" name="redirect_checkout" id="redirectCheckout" value="0">
                     </form>
+                    <script>document.querySelector('[name="buy_now"]')?.addEventListener('click',()=>document.getElementById('redirectCheckout').value='1');</script>
 
                 </div>
 
@@ -444,69 +361,39 @@
             <div class="col-lg-8">
 
 
-                <form>
+                @if(session('success'))
+                    <div class="alert alert-success">{{ session('success') }}</div>
+                @endif
+                @if($errors->any())
+                    <div class="alert alert-danger">{{ $errors->first() }}</div>
+                @endif
 
-
+                @auth
+                <form action="{{ route('reviews.store', $product) }}" method="POST">
+                    @csrf
                     <div class="mb-3">
-
-                        <label class="form-label">
-                            Your Name
-                        </label>
-
-
-                        <input
-                            type="text"
-                            class="form-control"
-                            placeholder="Enter your name"
-                            autocomplete="name">
+                        <label class="form-label">Your Name</label>
+                        <input type="text" class="form-control" value="{{ auth()->user()->name }}" readonly>
                     </div>
-
-
                     <div class="mb-3">
-
-                        <label class="form-label">
-                            Rating
-                        </label>
-
-
-                        <div class="rating-input">
-
-                            <i class="fa-regular fa-star"></i>
-                            <i class="fa-regular fa-star"></i>
-                            <i class="fa-regular fa-star"></i>
-                            <i class="fa-regular fa-star"></i>
-                            <i class="fa-regular fa-star"></i>
-
-                        </div>
-
+                        <label class="form-label">Rating</label>
+                        <select name="rating" class="form-select" required>
+                            <option value="5">5 - Excellent</option>
+                            <option value="4">4 - Very Good</option>
+                            <option value="3">3 - Good</option>
+                            <option value="2">2 - Fair</option>
+                            <option value="1">1 - Poor</option>
+                        </select>
                     </div>
-
-
                     <div class="mb-3">
-
-                        <label class="form-label">
-                            Your Review
-                        </label>
-
-
-                        <textarea
-                            class="form-control"
-                            rows="5"
-                            placeholder="How did this fragrance make you feel?"
-                            aria-label="Customer review"></textarea>
-
+                        <label class="form-label">Your Review</label>
+                        <textarea name="review" class="form-control" rows="5" placeholder="How did this fragrance make you feel?" required></textarea>
                     </div>
-
-
-                    <button type="submit"
-                            class="btn gold-btn">
-
-                        Submit Review
-
-                    </button>
-
-
+                    <button type="submit" class="btn gold-btn">Submit Review</button>
                 </form>
+                @else
+                    <p>Please <a href="{{ route('login') }}">login</a> to submit a review.</p>
+                @endauth
 
 
             </div>
@@ -517,6 +404,27 @@
 
 </section>
 
+
+<section class="py-5">
+    <div class="container">
+        <h2 class="product-section-title text-center mb-5">Customer Reviews</h2>
+        @if($reviews->isEmpty())
+            <p class="text-center">No customer reviews yet.</p>
+        @else
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    @foreach($reviews as $review)
+                        <div class="review-card mb-3">
+                            <h5>{{ $review->user->name }}</h5>
+                            <div class="review-stars">{{ str_repeat('★', $review->rating) }}{{ str_repeat('☆', 5 - $review->rating) }}</div>
+                            <p>{{ $review->review }}</p>
+                        </div>
+                    @endforeach
+                </div>
+            </div>
+        @endif
+    </div>
+</section>
 
 <section class="continue-shopping text-center py-5">
 
@@ -530,41 +438,13 @@
 </section>
 
 
-<footer class="footer-section py-4">
 
-    <div class="container text-center">
-
-
-        <h3 class="footer-logo">
-            ESSENCE
-        </h3>
-
-
-        <p class="footer-subtitle">
-            OF THE MIDDLE EAST
-        </p>
-
-
-        <p class="footer-text">
-            Luxury fragrances inspired by the richness of the Middle East.
-        </p>
-
-
-        <hr>
-
-
-        <p class="copyright mb-0">
-           © {{ date('Y') }} | All Rights Reserved
-        </p>
-
-
-    </div>
-
-</footer>
 
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+
+@include('partials.footer')
 
 </body>
 

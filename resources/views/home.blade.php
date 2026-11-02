@@ -215,55 +215,14 @@
         }
 
     </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 </head>
 
 <body>
 
     <!-- NAVBAR -->
 
-    <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
-        <div class="container">
-
-            <a class="navbar-brand" href="#">
-                Essence of the Middle East
-            </a>
-
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-
-                <ul class="navbar-nav">
-
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Home</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/catalog') }}">Collection</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="About.html">About</a>
-                    </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="ContactUs.html">Contact</a>
-                    </li>
-
-                </ul>
-                <a href="#" class="cart-icon">
-                    <i class="bi bi-person"></i>
-                </a> 
-                
-                <a href="#" class="cart-icon">
-                    <i class="bi bi-bag-heart"></i>
-                </a>   
-            </div>
-
-        </div>
-    </nav>
+    @include('partials.header')
 
     <!-- HERO SECTION -->
 
@@ -382,20 +341,12 @@
 
     <!-- FOOTER -->
 
-    <footer>
-
-        <div class="container">
-
-            <p>
-                © 2026 Essence of the Middle East | Arabian Perfume 
-            </p>
-
-        </div>
-
-    </footer>
+    
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+@include('partials.footer')
 
 </body>
 </html>

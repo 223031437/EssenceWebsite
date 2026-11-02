@@ -4,6 +4,8 @@ use App\Models\User;
 
 return [
 
+    'employee_registration_code' => env('SALON_EMPLOYEE_CODE'),
+
     /*
     |--------------------------------------------------------------------------
     | Authentication Defaults

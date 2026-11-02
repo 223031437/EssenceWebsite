@@ -300,37 +300,7 @@
 <body>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg">
-        <div class="container">
-            <a class="navbar-brand" href="#">Essence of the Middle East</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation" style="border-color: #333;">
-                <span class="fa fa-bars text-white"></span>
-            </button>
-            <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
-                <ul class="navbar-nav align-items-center">
-                    <li class="nav-item">
-                        <a class="nav-link" href="home.html">Home</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="Catalog.html">Shop</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="About.html">About</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="#">Contact</a>
-                    </li>
-                    <!-- Login Icon added near Bag Icon -->
-                    <li class="nav-item">
-                        <a class="icon-link" href="#"><i class="fa-regular fa-user"></i></a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="icon-link" href="#"><i class="fa-solid fa-bag-shopping"></i></a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
+    @include('partials.header')
 
     <!-- Contact Header -->
     <section class="contact-header">
@@ -363,7 +333,7 @@
                         </div>
                         <div class="contact-details">
                             <h5>ADDRESS</h5>
-                            <p> Shop G8, Cape Station retail, 1 Alderley st, Central, Cape Town City Centre, Cape Town, 8001,<br>South Africa</p>
+                            <p>{{ $business?->address ?? 'Shop G8, Cape Station retail, 1 Alderley st, Central, Cape Town City Centre, Cape Town, 8001, South Africa' }}</p>
                         </div>
                     </div>
 
@@ -373,7 +343,7 @@
                         </div>
                         <div class="contact-details">
                             <h5>PHONE</h5>
-                            <a href="tel:+27676844506">+27 67 684 4506</a>
+                            <a href="tel:{{ $business?->phone ?? '+27 67 684 4506' }}">{{ $business?->phone ?? '+27 67 684 4506' }}</a>
                         </div>
                     </div>
 
@@ -383,7 +353,7 @@
                         </div>
                         <div class="contact-details">
                             <h5>EMAIL</h5>
-                            <a href="mailto:info@essencemiddleeast.co.za">info@essencemiddleeast.co.za</a>
+                            <a href="mailto:{{ $business?->email ?? 'info@essencemiddleeast.co.za' }}">{{ $business?->email ?? 'info@essencemiddleeast.co.za' }}</a>
                         </div>
                     </div>
 
@@ -394,7 +364,7 @@
                         </div>
                         <div>
                             <h5 style="font-family: 'Poppins', sans-serif; font-size: 0.8rem; letter-spacing: 2px; color: #888; margin-bottom: 2px;">HOURS</h5>
-                            <p style="margin:0; color: #ccc;">Mon-Sat 9am–6pm | Sun 9am–3pm</p>
+                            <p style="margin:0; color: #ccc;">{{ $business?->hours ?? 'Mon-Sat 9am–6pm | Sun 9am–3pm' }}</p>
                         </div>
                     </div>
 
@@ -403,34 +373,35 @@
                 <!-- Form Section -->
                 <div class="col-lg-6">
                     <div class="contact-form-wrapper">
-                        <form action="{{ route('contact.store') }}" method="POST"
+                        <form id="contactForm" action="{{ route('contact.store') }}" method="POST">
+                            @csrf
                             <div class="mb-4">
                                 <label class="form-label">NAME <span>*</span></label>
-                                <input type="text" class="form-control" placeholder="Your name" required>
+                                <input type="text" name="name" class="form-control" placeholder="Your name" value="{{ old('name') }}" required>
                             </div>
 
                             <div class="mb-4">
                                 <label class="form-label">EMAIL <span>*</span></label>
-                                <input type="email" class="form-control" placeholder="your@email.com" required>
+                                <input type="email" name="email" class="form-control" placeholder="your@email.com" value="{{ old('email') }}" required>
                             </div>
 
                             <div class="mb-4">
                                 <label class="form-label">PHONE</label>
-                                <input type="tel" class="form-control" placeholder="+27...">
+                                <input type="tel" name="phone" class="form-control" placeholder="+27..." value="{{ old('phone') }}">
                             </div>
 
                             <div class="mb-4">
                                 <label class="form-label">SUBJECT</label>
-                                <select class="form-select">
-                                    <option selected>General Inquiry</option>
-                                    <option>Custom Scent Service</option>
-                                    <option>Order Support</option>
+                                <select name="subject" class="form-select">
+                                    <option value="General Inquiry" selected>General Inquiry</option>
+                                    <option value="Custom Scent Service">Custom Scent Service</option>
+                                    <option value="Order Support">Order Support</option>
                                 </select>
                             </div>
 
                             <div class="mb-4">
                                 <label class="form-label">MESSAGE <span>*</span></label>
-                                <textarea class="form-control" rows="5" placeholder="Tell us how we can help..." required></textarea>
+                                <textarea name="message" class="form-control" rows="5" placeholder="Tell us how we can help..." required>{{ old('message') }}</textarea></textarea>
                             </div>
 
                             <button type="submit" class="btn btn-gold">
@@ -444,24 +415,14 @@
     </section>
 
     <!-- Footer -->
-    <footer>
-        <div class="container">
-            <p class="mb-0">&copy; 2026 Essence of the Middle East. All Rights Reserved.</p>
-        </div>
-    </footer>
+    
 
     <!-- Bootstrap JS -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- Simple JS for Form Handling -->
-    <script>
-        document.getElementById('contactForm').addEventListener('submit', function(e) {
-            e.preventDefault();
-            // In a real scenario, you would send this data to a PHP backend here.
-            alert('Thank you! Your message has been sent.');
-            this.reset();
-        });
-    </script>
+
+
+@include('partials.footer')
 
 </body>
 </html>
