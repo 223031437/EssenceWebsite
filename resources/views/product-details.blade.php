@@ -75,13 +75,13 @@
                          class="img-fluid main-product-image">
 
 
-                    <div class="image-gallery mt-3">
+                    <!-- <div class="image-gallery mt-3">
 
                         <img src="{{ asset('images/' . $product->image) }}"
                              alt="{{ $product->name }} gallery image"
                              class="gallery-image">
 
-                    </div>
+                    </div> -->
 
                 </div>
 
@@ -138,7 +138,7 @@
 
                         @csrf
 
-                        <button class="btn gold-outline-btn me-2"
+                        <button class="btn gold-btn"
                                 type="submit">
 
                             Add to Cart
@@ -429,7 +429,7 @@
 <section class="continue-shopping text-center py-5">
 
     <a href="{{ url('/catalog') }}"
-        class="btn gold-outline-btn">
+        class="btn gold-btn">
 
         Continue Shopping
 

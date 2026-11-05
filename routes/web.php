@@ -10,6 +10,10 @@ use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\Auth\AuthController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\EmployeeController;
+use App\Http\Controllers\Staff\StockController;
+use App\Http\Controllers\Admin\OrderController as AdminOrderController;
 
 Route::get('/', [ProductController::class, 'home'])->name('home');
 Route::get('/catalog', [ProductController::class, 'catalog'])->name('catalog');
@@ -44,4 +48,24 @@ Route::middleware('auth')->group(function () {
     Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
     Route::get('/orders/{order}', [OrderController::class, 'show'])->name('orders.show');
     Route::post('/product/{product}/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+});
+
+Route::middleware(['auth', 'admin'])->prefix('admin')->name('admin.')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    
+    // Employee Management
+    Route::get('/employees', [EmployeeController::class, 'index'])->name('employees.index');
+    Route::get('/employees/create', [EmployeeController::class, 'create'])->name('employees.create');
+    Route::post('/employees', [EmployeeController::class, 'store'])->name('employees.store');
+    Route::patch('/employees/{user}/toggle', [EmployeeController::class, 'toggleStatus'])->name('employees.toggle');
+    Route::resource('products', \App\Http\Controllers\Admin\ProductController::class);
+    Route::get('/orders', [AdminOrderController::class, 'index'])->name('orders.index');
+    Route::get('/orders/{order}', [AdminOrderController::class, 'show'])->name('orders.show');
+    Route::patch('/orders/{order}/status', [AdminOrderController::class, 'updateStatus'])->name('orders.updateStatus');
+});
+
+Route::middleware(['auth', 'staff'])->prefix('staff')->name('staff.')->group(function () {
+    Route::get('/dashboard', [StockController::class, 'index'])->name('dashboard');
+    Route::patch('/products/{product}/stock', [StockController::class, 'updateStock'])->name('stock.update');
+    Route::get('/orders', [StockController::class, 'orders'])->name('orders');
 });

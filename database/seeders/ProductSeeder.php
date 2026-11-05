@@ -97,7 +97,7 @@ class ProductSeeder extends Seeder
 
             [
                 'name' => 'Away',
-                'image' => 'away.png',
+                'image' => 'Away.png',
                 'collection' => 'Luxury Edition',
                 'category' => 'Unisex',
                 'price' => 699.99,
