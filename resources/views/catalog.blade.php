@@ -88,8 +88,13 @@
 
                 <i class="fa-regular fa-heart heart"></i>
 
-                <img src="{{ asset('images/' . $product->image) }}"
-                     alt="{{ $product->name }}">
+                @php
+                    $imagePath = file_exists(public_path('images/products/' . $product->image)) 
+                                ? 'images/products/' . $product->image 
+                                : 'images/' . $product->image;
+                @endphp
+
+                <img src="{{ asset($imagePath) }}" alt="{{ $product->name }}" class="img-fluid">
 
                 <div class="card-content">
 
