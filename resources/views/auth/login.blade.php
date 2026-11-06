@@ -23,17 +23,21 @@ h1{font-family:'Cormorant Garamond',serif;color:#d6ae73;font-size:2.8rem}
 <div class="text-center mb-4"><h1>Sign In</h1><p class="text-secondary mb-0">Access your Essence account</p></div>
 @if(session('success'))<div class="alert alert-success">{{ session('success') }}</div>@endif
 @if($errors->any())<div class="alert alert-danger"><ul class="mb-0">@foreach($errors->all() as $error)<li>{{ $error }}</li>@endforeach</ul></div>@endif
-<form method="POST" action="{{ route('login.store') }}">
-@csrf
-<label class="form-label mb-2">Sign in as</label>
-<div class="row g-2 mb-4">
-<label class="col-6 role-choice {{ old('role','customer')==='customer' ? 'active' : '' }}"><input type="radio" name="role" value="customer" {{ old('role','customer')==='customer'?'checked':'' }}><div class="role-title"><i class="fa-regular fa-user me-1"></i> Customer</div><div class="role-desc">Shop and manage orders</div></label>
-<label class="col-6 role-choice {{ old('role')==='employee' ? 'active' : '' }}"><input type="radio" name="role" value="employee" {{ old('role')==='employee'?'checked':'' }}><div class="role-title"><i class="fa-solid fa-user-tie me-1"></i> Employee</div><div class="role-desc">Salon staff access</div></label>
-</div>
-<div class="mb-3"><label class="form-label">Email</label><input type="email" name="email" class="form-control" value="{{ old('email') }}" required autofocus></div>
-<div class="mb-3"><label class="form-label">Password</label><input type="password" name="password" class="form-control" required></div>
-<div class="form-check mb-4"><input class="form-check-input" type="checkbox" name="remember" value="1" id="remember"><label class="form-check-label" for="remember">Remember me</label></div>
-<button class="btn btn-gold w-100" type="submit">Sign In</button>
+<form method="POST" action="{{ route('login') }}">
+    @csrf
+    <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input type="email" name="email" class="form-control" value="{{ old('email') }}" required>
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input type="password" name="password" class="form-control" required>
+    </div>
+    <div class="mb-3 form-check">
+        <input type="checkbox" name="remember" class="form-check-input" id="remember">
+        <label class="form-check-label" for="remember">Remember me</label>
+    </div>
+    <button type="submit" class="btn btn-gold w-100">Sign In</button>
 </form>
 <p class="text-center mt-4 mb-0">Don't have an account? <a class="auth-link" href="{{ route('register') }}">Create an account</a></p>
 <p class="text-center mt-2 mb-0"><a class="auth-link" href="{{ route('home') }}">Continue as guest</a></p>

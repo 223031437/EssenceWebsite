@@ -373,6 +373,22 @@
                 <!-- Form Section -->
                 <div class="col-lg-6">
                     <div class="contact-form-wrapper">
+                        @if(session('success'))
+                            <div class="alert alert-success alert-dismissible fade show" role="alert" style="background-color: #1a2e1a; border-color: #2e7d32; color: #a5d6a7;">
+                                <i class="fa-solid fa-check-circle me-2"></i> {{ session('success') }}
+                                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        @endif
+
+                        @if($errors->any())
+                            <div class="alert alert-danger" style="background-color: #2e1a1a; border-color: #7d3232; color: #d6a5a5;">
+                                <ul class="mb-0">
+                                    @foreach($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
+                            </div>
+                        @endif
                         <form id="contactForm" action="{{ route('contact.store') }}" method="POST">
                             @csrf
                             <div class="mb-4">
@@ -401,7 +417,7 @@
 
                             <div class="mb-4">
                                 <label class="form-label">MESSAGE <span>*</span></label>
-                                <textarea name="message" class="form-control" rows="5" placeholder="Tell us how we can help..." required>{{ old('message') }}</textarea></textarea>
+                                <textarea name="message" class="form-control" rows="5" placeholder="Tell us how we can help..." required>{{ old('message') }}</textarea>
                             </div>
 
                             <button type="submit" class="btn btn-gold">

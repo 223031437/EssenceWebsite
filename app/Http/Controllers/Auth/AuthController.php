@@ -8,7 +8,6 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\Rules\Password;
-use Illuminate\Validation\ValidationException;
 
 class AuthController extends Controller
 {
@@ -19,32 +18,38 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
+        // 1. Only validate email and password (no role choice anymore)
         $credentials = $request->validate([
             'email' => ['required', 'email'],
             'password' => ['required', 'string'],
-            'role' => ['required', 'in:customer,employee'],
         ]);
 
-        $user = User::where('email', $credentials['email'])->first();
+        // 2. Attempt to log in
+        if (Auth::attempt($credentials, $request->boolean('remember'))) {
+            if (!Auth::user()->is_active) {
+                Auth::logout();
+                return back()->withErrors(['email' => 'Your account has been deactivated. Please contact the administrator.']);
+            }
 
-        if (!$user || !Hash::check($credentials['password'], $user->password)) {
-            return back()->withErrors([
-                'email' => 'The email or password is incorrect.',
-            ])->withInput($request->only('email', 'role'));
+            $request->session()->regenerate();
+            $user = Auth::user();
+            
+
+            // 3. Redirect based on their database role
+            if ($user->role === 'admin') {
+                return redirect()->route('admin.dashboard')->with('success', 'Welcome back, Admin.');  
+            } elseif ($user->role === 'employee') {
+                return redirect()->route('staff.dashboard')->with('success', 'Welcome back, Employee.'); 
+            }
+
+            // Default for customers
+            return redirect()->intended(route('home'))->with('success', 'Welcome back, '.$user->name.'.');
         }
 
-        if (($user->role ?: 'customer') !== $credentials['role']) {
-            return back()->withErrors([
-                'role' => $credentials['role'] === 'employee'
-                    ? 'Access denied. This account is not registered as a salon employee.'
-                    : 'This account is registered as an employee. Please select Employee to continue.',
-            ])->withInput($request->only('email', 'role'));
-        }
-
-        Auth::login($user, $request->boolean('remember'));
-        $request->session()->regenerate();
-
-        return redirect()->intended(route('home'))->with('success', 'Welcome back, '.$user->name.'.');
+        // 4. If login fails
+        return back()->withErrors([
+            'email' => 'The provided credentials do not match our records.',
+        ])->onlyInput('email');
     }
 
     public function showRegister()
@@ -58,33 +63,20 @@ class AuthController extends Controller
             'name' => ['required', 'string', 'max:255'],
             'email' => ['required', 'email', 'max:255', 'unique:users,email'],
             'password' => ['required', 'confirmed', Password::min(8)],
-            'role' => ['required', 'in:customer,employee'],
-            'employee_code' => ['nullable', 'required_if:role,employee', 'string'],
         ]);
 
-        $role = $validated['role'];
-
-        if ($role === 'employee') {
-            $configuredCode = (string) config('auth.employee_registration_code', '');
-
-            if ($configuredCode === '' || !hash_equals($configuredCode, (string) $request->employee_code)) {
-                throw ValidationException::withMessages([
-                    'employee_code' => 'Employee registration denied. A valid salon employee verification code is required.',
-                ]);
-            }
-        }
-
+        // FORCE role to customer. Ignore any role sent by the form.
         $user = User::create([
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => $validated['password'],
-            'role' => $role,
+            'role' => 'customer', 
         ]);
 
         Auth::login($user);
         $request->session()->regenerate();
 
-        return redirect()->intended(route('home'))->with('success', 'Your '.$role.' account has been created.');
+        return redirect()->intended(route('home'))->with('success', 'Your customer account has been created.');
     }
 
     public function logout(Request $request)
